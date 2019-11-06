@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     auto res = t.toCode(file);
     std::ofstream dmpout(args["-o"] + ".tree"), resout(args["-o"] + ".myrar");
     for (int i = 0; i < dmp.size(); i++)
-            dmpout << dmp[i].first << ' ' << dmp[i].second << '\n';
+            dmpout << int(dmp[i].first) << ' ' << dmp[i].second << '\n';
     // std::cout << args["-0"] + ".tree" << ' ' << resout << '\n';
     resout << file.size() << '\n';
     std::cerr<<"\n\n";

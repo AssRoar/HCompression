@@ -33,12 +33,12 @@ int main(int argc, char* argv[]) {
     std::cerr << n << ' ' << file << '\n';
     std::cerr << ("init file:" + args["-t"] + '\n');
     t.initByFile(args["-t"]);
-    std::cerr << "kek4\n";
     std::vector<unsigned char> v(file.size());
     std::cerr << "v " << v.size() << '\n';
     for (int i = 0; i<file.size(); i++)
         v[i] = file[i];
 
+    std::cerr << "kek4\n";
     auto res = t.toStdString(v, n);
     std::ofstream  resout(args["-o"] + ".res");
         if (args["-o"].empty()){

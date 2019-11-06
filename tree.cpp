@@ -153,15 +153,11 @@ std::string HTree::toStdString(std::vector<unsigned char> v, int cnt) {
 
 void HTree::initByFile(std::string name) {
     std::ifstream fin(name);
-    // assert(fin);
-    char var;
-    std::string s;
-    while (getline(fin, s)){
-        std::cerr << "init: ";
-        std::cerr << s[0] << ' ';
-        var = s[0];
-        code[var] = s.substr(2);
-        std::cerr << code[var] << '\n';
-        decode[code[var]] = var;
+    std::cerr << "start init\n";
+    int c;
+    while (fin >> c){
+        fin >> code[c];
+        std::cerr << code[c] << '\n';
+        decode[code[c]] = c;
     }
 }
