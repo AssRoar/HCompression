@@ -24,12 +24,16 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     std::ifstream fin(args["-f"]);
-    int n;
+    int n, inp_sz;
     fin >> n;
+    fin >> inp_sz;
+    inp_sz++;
     char c;
-    while ((c = fin.get()) != EOF)
+    while (inp_sz--) {
+        c = fin.get();
         file += c;
-    HTree t; // FIX ME
+    }
+    HTree t;
     std::cerr << n << ' ' << file << '\n';
     std::cerr << ("init file:" + args["-t"] + '\n');
     t.initByFile(args["-t"]);

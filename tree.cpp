@@ -57,6 +57,7 @@ void HTree::setValues(std::string pref, node * rt) {
 
 std::vector<std::pair<char, std::string> > HTree::dump() {
     std::vector<std::pair<char, std::string> > res;
+    std::cerr << cnt[10] << '\n';
     for (int c = 0; c < 256; c++)
         if (cnt[c]) {
             res.emplace_back(c, code[c]);
@@ -92,6 +93,7 @@ HTree::HTree() {
 }
 
 std::vector<unsigned char> HTree::toCode(std::string & s) {
+    std::cerr << "EOL: " << cnt[10] << '\n';
     int n = 0;
     for (char c:s)
         n += code[c].size();

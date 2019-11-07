@@ -20,16 +20,22 @@ int main(int argc, char* argv[]) {
     }
     std::ifstream fin(args["-f"]);
     char c;
-    while ((c = fin.get()) != EOF)
-        file += c;
+    std::string s;
+    while (getline(fin, s)) {
+        file += s;
+        file += '\n';
+    }
+    std::cerr << file << '\n';
+    file.pop_back();
     HTree t(file);
     auto dmp = t.dump();
     auto res = t.toCode(file);
     std::ofstream dmpout(args["-o"] + ".tree"), resout(args["-o"] + ".myrar");
     for (int i = 0; i < dmp.size(); i++)
             dmpout << int(dmp[i].first) << ' ' << dmp[i].second << '\n';
+    std::cerr<<"\n\n";
     // std::cout << args["-0"] + ".tree" << ' ' << resout << '\n';
-    resout << file.size() << '\n';
+    resout << file.size() << ' ' << res.size() << '\n';
     std::cerr<<"\n\n";
     for (int i = 0; i < res.size(); i++) {
         resout << res[i];
