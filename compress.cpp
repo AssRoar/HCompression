@@ -34,11 +34,13 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < dmp.size(); i++)
             dmpout << int(dmp[i].first) << ' ' << dmp[i].second << '\n';
     std::cerr<<"\n\n";
-    // std::cout << args["-0"] + ".tree" << ' ' << resout << '\n';
     resout << file.size() << ' ' << res.size() << '\n';
-    std::cerr<<"\n\n";
+    std::cerr << file.size() << ' ' << res.size() << '\n';
+//    std::cerr<<"\n\n";
     for (int i = 0; i < res.size(); i++) {
+//        std::cerr << 's';
         resout << res[i];
-        std::cerr << res[i];
+//        std::cerr << 'f';
     }
+    return 0;
 }
