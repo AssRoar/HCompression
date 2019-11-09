@@ -44,21 +44,14 @@ void compress(std::string name, std::string out_name){
         std::cout << "empty file\n";
         return;
     }
-    std::cout << "before size: " << input.size() << '\n';
     std::vector<int64_t> cnt(256, 0);
     for (auto c : input)
         ++cnt[c];
     std::vector<std::string> code(256);
     std::multiset<node *, cmp> st;
-
-    int a = 0; //TODO delete a
-
     for (int i = 0; i < 256; i++)
-        if (cnt[i] != 0) {
+        if (cnt[i] != 0)
             st.insert(new node(i, cnt[i]));
-            a += cnt[i];
-        }
-
     node * root = nullptr;
     while (st.size() > 1){
         node * l = *st.begin();
@@ -72,11 +65,11 @@ void compress(std::string name, std::string out_name){
     int rcnt = 0;
     if (root -> term){
         code[root->value] = "1";
+        rcnt = 1;
     } else {
         set_code(root, std::string(), code);
         for (int i = 0; i < 256; i++)
             if (cnt[i] != 0) {
-//                std::cout << (unsigned char) i << ' ' << code[i] << '\n';
                 rcnt++;
             }
     }
@@ -95,8 +88,6 @@ void compress(std::string name, std::string out_name){
     int64_t code_len = 0;
     for (auto c:input)
         code_len += code[c].size();
-
-//    code_len += 100;
 
     if (code_len % 8 != 0)
         code_len = (code_len + 8) - code_len % 8;
@@ -119,15 +110,7 @@ void compress(std::string name, std::string out_name){
         }
     std::string nums = std::to_string(input.size()) + ' ' + std::to_string(code_len) + '\n';
     out.write(nums.c_str(), nums.size());
-//    for (int i = 0; i < 10; i++)
-//        std::cerr << int(res[i]) << ' ';
-//    std::cerr << int(res[N]);
-
-    std :: cout << '\n' << int(res[code_len-1]) << '\n';
-    std::cout << "code1 size: " << code_len << '\n';
-    std::cout << "\n\n\n done \n\n\n";
     out.write(res, code_len);
-    std::cout << "ans[N]: " << int(input[N]) << '\n';
 }
 
 void decompress(std::string name, std::string out_name){
@@ -163,11 +146,9 @@ void decompress(std::string name, std::string out_name){
         }
     int ans_size, code_len;
     fin >> ans_size >> code_len;
-    std::cout << ans_size << ' ' << code_len << '\n';
     fin.close();
     fin.open(name, std::ios::binary);
     std::vector<unsigned char> input(std::istreambuf_iterator<char>(fin), {});
-    std::cout << "HERE: " << int(input.back()) << '\n';
     std::ofstream out(out_name, std::ios::out | std::ios::binary);
     int stpos = 0;
     int enter_cnt = 0;
@@ -176,16 +157,10 @@ void decompress(std::string name, std::string out_name){
     int byte = 0;
     int bit = 0;
     cur = root;
-    std::cout << input[stpos] << '\n';
     auto * ans = new unsigned char[ans_size];
-    for (int i = 0; i<10; i++)
-        std::cerr << int(input[stpos + i]) << ' ';
-    std::cerr << int(input[N + stpos]);
-    std::cerr<< "\n\n\n";
     int cur_pos = 0;
-    std::cout << "code2: " << input.size() - stpos << '\n';
     for (byte = stpos; byte<input.size() && cur_pos < ans_size; byte++){
-        for (bit = 0; bit < 8; bit++ && cur_pos < ans_size){
+        for (bit = 0; bit < 8 && cur_pos < ans_size; bit++){
             if (input[byte] & (1 << bit)){
                 cur = cur -> l;
             } else
@@ -197,11 +172,7 @@ void decompress(std::string name, std::string out_name){
         }
     }
     std::cerr << cur_pos << '\n';
-//    out.write(ans, ans_size);
     out.write((char *)&ans[0], ans_size);
-    std::cerr << '\n' << int(input[cur_pos-1]) << '\n';
-    std::cout << "\nans size: " << ans_size << '\n';
-    std::cout << "ans[N]: " << int(ans[N]) << '\n';
 }
 
 int main() {
